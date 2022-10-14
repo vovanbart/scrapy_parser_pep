@@ -1,12 +1,8 @@
 import csv
 from collections import Counter
 from datetime import datetime as dt
-from pathlib import Path
 
-BASE_DIR = Path(__file__).parents[1]
-RESULT_DIR = 'results'
-TIME_FORMAT = '%Y-%m-%d_%H-%M-%S'
-FILE_NAME = 'status_summary_{}.csv'
+from settings import BASE_DIR, RESULT_DIR, TIME_FORMAT, FILE_NAME
 
 
 class PepParsePipeline:
@@ -21,6 +17,7 @@ class PepParsePipeline:
         file_path = self.results_dir / FILE_NAME.format(time)
         self.file = csv.writer(open(file_path, 'w'))
         self.file.writerow(['Статус', 'Количество'])
+        self.file.close()
 
     def process_item(self, item, spider):
         self.count_status[item['status']] += 1
